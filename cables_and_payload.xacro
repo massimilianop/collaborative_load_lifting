@@ -2,7 +2,7 @@
 <!--
   Author: Massimiliano Pandolfo
 
-  Version 0.5
+  Version 0.5.1
   Changed approach to the problem, now cable_macro handles ALL the auxiliary spheres.
   ADDITIONAL TESTING REQUIRED to make sure the various offsets are correct.
 -->
@@ -16,6 +16,22 @@
   <xacro:property name="sphere_radius" value="0.005" /> <!-- [m] -->
   <xacro:property name="sphere_mass" value="0.001" /> <!-- [kg] -->
 
+  <!-- TEST macro for a box -->
+  <xacro:macro name="cuboid_macro">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1"/>
+        <inertia
+        ixx="1" ixy="0.0" ixz="0.0"
+        iyy="1" iyz="0.0"
+        izz="1"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size=".1 .2 .01"/>
+      </geometry>
+    </visual>
+  </xacro:macro>
 
   <!-- Macro for the auxiliary spheres -->
   <xacro:macro name="sphere_macro" params="r mass">
@@ -41,7 +57,8 @@
 
     <!-- This sphere is between payload (root node) and cable -->
     <link name="${robot_namespace}/aux_pay_${id_number}">
-      <xacro:sphere_macro r="${sphere_radius * 5}" mass="${sphere_mass}"/>
+      <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/>
+      <!--xacro:cuboid_macro/> for testing -->
     </link>
 
     <!-- The CABLE is represented as a cylindrical link -->
