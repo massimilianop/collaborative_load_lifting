@@ -2,8 +2,9 @@
 <!--
   Author: Massimiliano Pandolfo
 
-  Version 0.3.1
-  The new macro sphere_inertia_macro improves the creation of auxiliary spheres.
+  Version 0.5
+  Changed approach to the problem, now cable_macro handles ALL the auxiliary spheres.
+  ADDITIONAL TESTING REQUIRED to make sure the various offsets are correct.
 -->
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
@@ -34,14 +35,17 @@
   </xacro:macro>
 
 
-  <!-- Connecting the cable to a UAV -->
+  <!-- Macro that connects a cable to a UAV -->
   <xacro:macro name="cable_macro"
     params="robot_namespace uav_body_frame id_number">
 
+    <!-- This sphere is between payload (root node) and cable -->
+    <link name="${robot_namespace}/aux_pay_${id_number}">
+      <xacro:sphere_macro r="${sphere_radius * 5}" mass="${sphere_mass}"/>
+    </link>
 
     <!-- The CABLE is represented as a cylindrical link -->
     <link name="${robot_namespace}/cable_${id_number}">
-
       <!-- ############### RANDOM INERTIA. just for testing!!! ############### -->
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -52,56 +56,64 @@
           izz="1.0"/>
       </inertial>
       <!-- ###################### end of RANDOM INERTIA. ##################### -->
-
       <visual>
+         <origin xyz="0 0 ${cable_length/2}" rpy="0 0 0"/> <!-- ATTENZIONE -->
         <geometry>
           <cylinder length="${cable_length}" radius="${cable_radius}"/>
         </geometry>
       </visual>
-
     </link>
 
-
-    <!-- The sphere is needed to implement a double revolute joint -->
-    <link name="${robot_namespace}/aux_sphere_${id_number}">
+    <!-- This sphere is between cable and uav -->
+    <link name="${robot_namespace}/aux_uav_${id_number}">
       <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/>
     </link>
 
 
-    <!-- First revolute joint, connecting the CABLE to the auxiliary sphere -->
-    <joint name="${robot_namespace}/joint_cab${id_number}aux${id_number}" type="continuous"> <!-- revolute w/o limits to the angle -->
+    <!-- Joint between payload sphere and the cable -->
+    <joint name="${robot_namespace}/joint_sph_cab_${id_number}" type="continuous">
 
-      <!-- Placing the joint on the upper end of the cable -->
-      <origin xyz="0 0 ${cable_length/2}" rpy="0 0 0" />
+      <!-- Placing the joint ref frame in the center of the sphere -->
+      <origin xyz="0 0 0" rpy="0 0 0" />
+
+      <!-- Axis in the CHILD REFERENCE FRAME around which the rotation happens -->
+      <axis xyz="1 0 0" />
+
+      <parent link="${robot_namespace}/aux_pay_${id_number}" />
+      <child link="${robot_namespace}/cable_${id_number}" />
+
+    </joint>
+
+
+    <!-- Joint between the cable and the UAV sphere -->
+    <joint name="${robot_namespace}/joint_cab_sph_${id_number}" type="continuous">
+
+      <!-- Placing the joint ref frame on the upper end of the cable -->
+      <origin xyz="0 0 ${cable_length}" rpy="0 0 0" />
 
       <!-- Axis in the CHILD REFERENCE FRAME around which the rotation happens -->
       <axis xyz="1 0 0" />
 
       <parent link="${robot_namespace}/cable_${id_number}" />
-      <child link="${robot_namespace}/aux_sphere_${id_number}" />
+      <child link="${robot_namespace}/aux_uav_${id_number}" />
+
     </joint>
 
 
-    <!-- Second revolute joint, connecting the UAV to the auxiliary sphere -->
-    <joint name="${robot_namespace}/joint_aux${id_number}uav${id_number}" type="continuous"> <!-- revolute w/o limits to the angle -->
+    <!-- Joint between the UAV sphere amd the UAV-->
+    <joint name="${robot_namespace}/joint_sph_uav_${id_number}" type="continuous">
 
-      <!-- Here I can specify the origin of the joint in the UAV body frame -->
+      <!-- Placing the joint ref frame in the center of the sphere -->
       <origin xyz="0 0 0" rpy="0 0 0" />
 
       <!-- Axis in the CHILD REFERENCE FRAME around which the rotation happens -->
       <axis xyz="0 1 0" />
 
-      <parent link="${robot_namespace}/aux_sphere_${id_number}" />
+      <parent link="${robot_namespace}/aux_uav_${id_number}" />
       <child link="${uav_body_frame}" />
-      <!--
-      <parent link="${uav_body_frame}" />
-      <child link="${robot_namespace}/aux_sphere_${id_number}" />
-      -->
     </joint>
 
   </xacro:macro>
-</robot>
 
-<!--
-<origin xyz="0 ${arm_length} ${rotor_offset_top}" rpy="0 0 0" />
--->
+
+</robot>

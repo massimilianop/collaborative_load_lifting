@@ -210,6 +210,11 @@
     id_number="1">
   </xacro:cable_macro>
 
+<!--
+  <xacro:payload_macro
+    cableTEST="${namespace}/cable_1">
+  </xacro:payload_macro>
+-->
   <!-- #################### END #################### -->
 
 </robot>
