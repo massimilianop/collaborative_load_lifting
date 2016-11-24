@@ -2,7 +2,7 @@
 <!--
   Author: Massimiliano Pandolfo
 
-  Version 0.3
+  Version 0.3.1
   The new macro sphere_inertia_macro improves the creation of auxiliary spheres.
 -->
 
@@ -16,8 +16,8 @@
   <xacro:property name="sphere_mass" value="0.001" /> <!-- [kg] -->
 
 
-  <!-- Macro for the inertia for the auxiliary spheres -->
-  <xacro:macro name="sphere_inertia_macro" params="r mass">
+  <!-- Macro for the auxiliary spheres -->
+  <xacro:macro name="sphere_macro" params="r mass">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="${mass}"/>
@@ -26,6 +26,11 @@
         iyy="${0.4 * mass * r * r}" iyz="0.0"
         izz="${0.4 * mass * r * r}"/>
     </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="${r}"/>
+      </geometry>
+    </visual>
   </xacro:macro>
 
 
@@ -59,15 +64,7 @@
 
     <!-- The sphere is needed to implement a double revolute joint -->
     <link name="${robot_namespace}/aux_sphere_${id_number}">
-
-      <xacro:sphere_inertia_macro r="${sphere_radius}" mass="${sphere_mass}"/>
-
-      <visual>
-        <geometry>
-          <sphere radius="${sphere_radius}"/>
-        </geometry>
-      </visual>
-
+      <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/>
     </link>
 
 
