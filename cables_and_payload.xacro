@@ -2,9 +2,10 @@
 <!--
   Author: Massimiliano Pandolfo
 
-  Version 0.5.1
+  Version 0.5.2
   Changed approach to the problem, now cable_macro handles ALL the auxiliary spheres.
   ADDITIONAL TESTING REQUIRED to make sure the various offsets are correct.
+  Improvements on the cuboid macro.
 -->
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
@@ -15,23 +16,29 @@
   <xacro:property name="cable_mass" value="0.05" /> <!-- [kg] -->
   <xacro:property name="sphere_radius" value="0.005" /> <!-- [m] -->
   <xacro:property name="sphere_mass" value="0.001" /> <!-- [kg] -->
+  <xacro:property name="x_payload" value="0.1"/> <!-- [m] -->
+  <xacro:property name="y_payload" value="0.1"/> <!-- [m] -->
+  <xacro:property name="z_payload" value="0.1"/> <!-- [m] -->
+  <xacro:property name="payload_mass" value="1"/> <!-- [kg] -->
 
-  <!-- TEST macro for a box -->
-  <xacro:macro name="cuboid_macro">
+
+  <!-- Macro that creates a cuboid -->
+  <xacro:macro name="cuboid_macro" params="x y z mass">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="1"/>
+      <mass value="${mass}"/>
         <inertia
-        ixx="1" ixy="0.0" ixz="0.0"
-        iyy="1" iyz="0.0"
-        izz="1"/>
+        ixx="${mass*(y*y+z*z)/12}" ixy="0.0" ixz="0.0"
+        iyy="${mass*(x*x+z*z)/12}" iyz="0.0"
+        izz="${mass*(y*y+x*x)/12}"/>
     </inertial>
     <visual>
       <geometry>
-        <box size=".1 .2 .01"/>
+        <box size="${x} ${y} ${z}"/>
       </geometry>
     </visual>
   </xacro:macro>
+
 
   <!-- Macro for the auxiliary spheres -->
   <xacro:macro name="sphere_macro" params="r mass">
@@ -55,10 +62,15 @@
   <xacro:macro name="cable_macro"
     params="robot_namespace uav_body_frame id_number">
 
+    <!-- ################################################################### -->
+    <!-- ##                             LINKS                             ## -->
+    <!-- ################################################################### -->
+
     <!-- This sphere is between payload (root node) and cable -->
     <link name="${robot_namespace}/aux_pay_${id_number}">
-      <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/>
-      <!--xacro:cuboid_macro/> for testing -->
+      <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/-->
+      <!-- For TESTING purposes: 
+      <xacro:cuboid_macro x="0.1" y="0.3" z="0.001" mass="1"/> -->
     </link>
 
     <!-- The CABLE is represented as a cylindrical link -->
@@ -86,6 +98,9 @@
       <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/>
     </link>
 
+    <!-- ################################################################### -->
+    <!-- ##                            JOINTS                             ## -->
+    <!-- ################################################################### -->
 
     <!-- Joint between payload sphere and the cable -->
     <joint name="${robot_namespace}/joint_sph_cab_${id_number}" type="continuous">
