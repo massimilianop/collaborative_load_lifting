@@ -68,7 +68,7 @@
 
     <!-- This sphere is between payload (root node) and cable -->
     <link name="${robot_namespace}/aux_pay_${id_number}">
-      <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/-->
+      <xacro:sphere_macro r="${sphere_radius}" mass="${sphere_mass}"/>
       <!-- For TESTING purposes: 
       <xacro:cuboid_macro x="0.1" y="0.3" z="0.001" mass="1"/> -->
     </link>
@@ -86,7 +86,7 @@
       </inertial>
       <!-- ###################### end of RANDOM INERTIA. ##################### -->
       <visual>
-         <origin xyz="0 0 ${cable_length/2}" rpy="0 0 0"/> <!-- ATTENZIONE -->
+        <origin xyz="0 0 ${cable_length/2}" rpy="0 0 0"/>
         <geometry>
           <cylinder length="${cable_length}" radius="${cable_radius}"/>
         </geometry>
