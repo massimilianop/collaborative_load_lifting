@@ -2,10 +2,8 @@
 <!--
   Author: Massimiliano Pandolfo
 
-  Version 0.5.2
-  Changed approach to the problem, now cable_macro handles ALL the auxiliary spheres.
-  ADDITIONAL TESTING REQUIRED to make sure the various offsets are correct.
-  Improvements on the cuboid macro.
+  Version 0.6
+  payload_macro partially implemented, it only has a single joint and so it works with the current firefly.xacro which only creates a single UAV.
 -->
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
@@ -16,9 +14,9 @@
   <xacro:property name="cable_mass" value="0.05" /> <!-- [kg] -->
   <xacro:property name="sphere_radius" value="0.005" /> <!-- [m] -->
   <xacro:property name="sphere_mass" value="0.001" /> <!-- [kg] -->
-  <xacro:property name="x_payload" value="0.1"/> <!-- [m] -->
-  <xacro:property name="y_payload" value="0.1"/> <!-- [m] -->
-  <xacro:property name="z_payload" value="0.1"/> <!-- [m] -->
+  <xacro:property name="x_payload" value="1"/> <!-- [m] -->
+  <xacro:property name="y_payload" value="0.01"/> <!-- [m] -->
+  <xacro:property name="z_payload" value="0.01"/> <!-- [m] -->
   <xacro:property name="payload_mass" value="1"/> <!-- [kg] -->
 
 
@@ -147,5 +145,31 @@
 
   </xacro:macro>
 
+
+  <xacro:macro name="payload_macro" params="link1"> <!-- link2" -->
+
+    <!-- This link represents the payload -->
+    <link name="bar">
+      <xacro:cuboid_macro x="${x_payload}" y="${y_payload}" z="${z_payload}" mass="${payload_mass}"/>
+    </link>
+
+    <!-- Joint connecting to the cable lifterd by the first UAV -->
+    <joint name="joint_sph1" type="continuous">
+
+      <!-- Placing the joint reference frame on one end of the bar -->
+      <origin xyz="0 0 ${z_payload/2 + sphere_radius}" rpy="0 0 0" />
+
+      <!-- Axis in the CHILD REFERENCE FRAME around which the rotation happens -->
+      <axis xyz="0 1 0" />
+
+      <parent link="bar" />
+      <child link="${link1}" />
+    </joint>
+
+    <!-- Joint connecting to the cable lifterd by the second UAV -->
+
+    <!-- CODE -->
+
+  </xacro:macro>
 
 </robot>
