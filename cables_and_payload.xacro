@@ -4,7 +4,7 @@
 
   Version 0.7
   payload_macro now receives two links as input, and acts as root node for the robot tree.
-  With the exception fo some minor improvements, this is supposed to be the final version before 1.0.
+  With the exception of some minor improvements, this is supposed to be the final version before 1.0.
 -->
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
