@@ -4,6 +4,7 @@
 
   Version 0.7
   payload_macro now receives two links as input, and acts as root node for the robot tree.
+  With the exception fo some minor improvements, this is supposed to be the final version before 1.0.
 -->
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
@@ -153,6 +154,7 @@
       <xacro:cuboid_macro x="${x_payload}" y="${y_payload}" z="${z_payload}" mass="${payload_mass}"/>
     </link>
 
+
     <!-- Joint connecting to the cable lifterd by the first UAV -->
     <joint name="joint_sph1" type="continuous">
 
@@ -165,6 +167,7 @@
       <parent link="bar" />
       <child link="${link1}" />
     </joint>
+
 
     <!-- Joint connecting to the cable lifterd by the second UAV -->
     <joint name="joint_sph2" type="continuous">
