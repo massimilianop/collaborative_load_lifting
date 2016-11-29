@@ -25,7 +25,7 @@
 <!--
   <xacro:payload_macro
     link1="${namespace}/aux_pay_1"
-    link1="${namespace}/aux_pay_2">
+    link2="${namespace}/aux_pay_2">
   </xacro:payload_macro>
 -->
   <!-- #################### END #################### -->
