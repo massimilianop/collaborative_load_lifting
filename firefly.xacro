@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<robot name="firefly" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Properties -->
+  <xacro:property name="namespace" value="$(arg namespace)" />
+
+  <!-- Included URDF Files -->
+  <xacro:include filename="$(find rotors_description)/urdf/firefly_creation_macro.xacro" />
+  <xacro:include filename="$(find rotors_description)/urdf/cables_and_payload.xacro" />
+
+  <!-- Creation of UAV_1 -->
+  <xacro:firefly_macro
+    namespace="${namespace}"
+    id_number="1">
+  </xacro:firefly_macro>
+
+  <!-- Attaching the cable to UAV_1 -->
+  <xacro:cable_macro
+    robot_namespace="${namespace}"
+    uav_body_frame="${namespace}/base_link"
+    id_number="1">
+  </xacro:cable_macro>
+
+<!--
+  <xacro:payload_macro
+    link1="${namespace}/aux_pay_1"
+    link2="${namespace}/aux_pay_2">
+  </xacro:payload_macro>
+-->
+  <!-- #################### END #################### -->
+
+</robot>
