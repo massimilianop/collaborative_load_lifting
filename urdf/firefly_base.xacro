@@ -11,8 +11,7 @@
 
   <!-- Creation of UAV_1 -->
   <xacro:firefly_macro
-    namespace="${namespace}"
-    id_number="1">
+    namespace="${namespace}">
   </xacro:firefly_macro>
 
   <!-- Attaching the cable to UAV_1 -->
@@ -24,8 +23,7 @@
 
   <!-- Creation of UAV_2 -->
   <xacro:firefly_macro
-    namespace="${namespace}_2"
-    id_number="2">
+    namespace="${namespace}_2">
   </xacro:firefly_macro>
 
   <!-- Attaching the cable to UAV_2 -->
