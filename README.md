@@ -4,4 +4,4 @@
 REQUIRES:
 https://github.com/ethz-asl/rotors_simulator
 
-TEST TEST TEST
+TEST3
