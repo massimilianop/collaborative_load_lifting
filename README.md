@@ -9,3 +9,5 @@ After installing the RotorS package, install this one. At the moment, the launch
 ~~~~
 roslaunch collaborative_load_lifting two_fireflies.launch
 ~~~~
+
+## PLEASE NOTE: This is still a work in progress!
