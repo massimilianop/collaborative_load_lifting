@@ -17,13 +17,13 @@
 
   <!-- Creation of UAV_1 -->
   <xacro:firefly_macro
-    namespace="${namespace}_1">
+    namespace="${namespace}">
   </xacro:firefly_macro>
 
   <!-- Attaching the cable to UAV_1 -->
   <xacro:cable_macro
-    robot_namespace="${namespace}_1"
-    uav_body_frame="${namespace}_1/base_link"
+    robot_namespace="${namespace}"
+    uav_body_frame="${namespace}/base_link"
     id_number="1">
   </xacro:cable_macro>
 
@@ -41,7 +41,7 @@
 
   <!-- Connecting cables to payload -->
   <xacro:payload_macro
-    link1="${namespace}_1/aux_pay_1"
+    link1="${namespace}/aux_pay_1"
     link2="${namespace}_2/aux_pay_2">
   </xacro:payload_macro>
 
