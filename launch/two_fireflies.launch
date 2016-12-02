@@ -14,15 +14,16 @@
     <!-- <arg name="gui" value="false"/> -->
   </include>
 
+  <include file="$(find collaborative_load_lifting)/launch/spawn_mav.launch">
+    <arg name="mav_name" value="$(arg mav_name)" />
+    <arg name="model" value="$(find collaborative_load_lifting)/urdf/mav_generic_odometry_sensor.gazebo" />
+    <arg name="enable_logging" value="$(arg enable_logging)" />
+    <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
+    <arg name="log_file" value="$(arg log_file)"/>
+  </include>
+
+
   <group ns="$(arg mav_name)">
-    <include file="$(find collaborative_load_lifting)/launch/spawn_mav.launch">
-      <arg name="mav_name" value="$(arg mav_name)" />
-      <arg name="model" value="$(find collaborative_load_lifting)/urdf/mav_generic_odometry_sensor.gazebo" />
-      <arg name="enable_logging" value="$(arg enable_logging)" />
-      <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
-      <arg name="log_file" value="$(arg log_file)"/>
-    </include>
-    
     <node name="lee_position_controller_node" pkg="rotors_control" type="lee_position_controller_node" output="screen">
       <rosparam command="load" file="$(find rotors_gazebo)/resource/lee_controller_$(arg mav_name).yaml" />
       <rosparam command="load" file="$(find rotors_gazebo)/resource/$(arg mav_name).yaml" />
@@ -35,12 +36,9 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-
   </group>
 
-
   <group ns="$(arg mav_name)_2">
-
     <node name="lee_position_controller_node" pkg="rotors_control" type="lee_position_controller_node" output="screen">
       <rosparam command="load" file="$(find rotors_gazebo)/resource/lee_controller_$(arg mav_name).yaml" />
       <rosparam command="load" file="$(find rotors_gazebo)/resource/$(arg mav_name).yaml" />
@@ -53,7 +51,7 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-
   </group>
+
 
 </launch>
