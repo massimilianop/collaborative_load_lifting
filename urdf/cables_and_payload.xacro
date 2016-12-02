@@ -154,7 +154,7 @@
 
 
     <!-- Joint connecting to the cable lifterd by the first UAV -->
-    <joint name="joint_sph1" type="continuous">
+    <joint name="bar/joint_sph1" type="continuous">
 
       <!-- Placing the joint reference frame on one end of the bar -->
       <origin xyz="${-x_payload/2} 0 ${z_payload/2 + sphere_radius}" rpy="0 0 0" />
@@ -168,7 +168,7 @@
 
 
     <!-- Joint connecting to the cable lifterd by the second UAV -->
-    <joint name="joint_sph2" type="continuous">
+    <joint name="bar/joint_sph2" type="continuous">
 
       <!-- Placing the joint reference frame on one end of the bar -->
       <origin xyz="${x_payload/2} 0 ${z_payload/2 + sphere_radius}" rpy="0 0 0" />
