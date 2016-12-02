@@ -74,16 +74,14 @@
 
     <!-- The CABLE is represented as a cylindrical link -->
     <link name="${robot_namespace}/cable_${id_number}">
-      <!-- ############### RANDOM INERTIA. just for testing!!! ############### -->
       <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 ${cable_length/2}" rpy="0 0 0"/>
         <mass value="${cable_mass}"/>
         <inertia
-          ixx="1.0" ixy="0.0" ixz="0.0"
-          iyy="1.0" iyz="0.0"
-          izz="1.0"/>
+          ixx="0.0" ixy="0.0" ixz="0.0"
+          iyy="${cable_mass * cable_length * cable_length / 3}" iyz="0.0"
+          izz="${cable_mass * cable_length * cable_length / 3}"/>
       </inertial>
-      <!-- ###################### end of RANDOM INERTIA. ##################### -->
       <visual>
         <origin xyz="0 0 ${cable_length/2}" rpy="0 0 0"/>
         <geometry>
