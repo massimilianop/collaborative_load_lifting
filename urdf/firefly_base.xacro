@@ -1,4 +1,10 @@
 <?xml version="1.0"?>
+<!--
+  Author: Massimiliano Pandolfo
+
+  Description: This file spawns two firefly UAVs, attaches a cable to each of them, and connects the payload to the two cable.
+  
+-->
 
 <robot name="firefly" xmlns:xacro="http://ros.org/wiki/xacro">
 
