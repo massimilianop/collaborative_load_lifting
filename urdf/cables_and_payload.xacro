@@ -18,7 +18,7 @@
   <xacro:property name="x_payload" value="1"/> <!-- [m] -->
   <xacro:property name="y_payload" value="0.01"/> <!-- [m] -->
   <xacro:property name="z_payload" value="0.01"/> <!-- [m] -->
-  <xacro:property name="payload_mass" value="1"/> <!-- [kg] -->
+  <xacro:property name="payload_mass" value="0.1"/> <!-- [kg] -->
 
 
   <!-- Macro that creates a cuboid -->
