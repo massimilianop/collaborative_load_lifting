@@ -28,6 +28,12 @@
   </include>
 
   <group ns="$(arg mav_name)">
+
+    <!-- REMOVE LATER -->
+    <param name="trajectry_offset_z" type="double" value="0.5"/>
+
+
+
     <include file="$(find collaborative_load_lifting)/launch/spawn_mav.launch">
       <arg name="mav_name" value="$(arg mav_name)" />
       <arg name="model" value="$(find collaborative_load_lifting)/urdf/mav_generic_odometry_sensor.gazebo" />
@@ -39,12 +45,12 @@
     <!-- Usage: waypoint_publisher <x> <y> <z> <yaw_deg> [<delay>] -->
     <!--
     <node name="waypoint_publisher" pkg="rotors_gazebo" type="waypoint_publisher" output="screen" args="-0.5 0 1 0 "/>
-    -->
     <node name="hovering_example" pkg="rotors_gazebo" type="hovering_example" output="screen"/>
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    -->
     
   </group>
 
@@ -54,6 +60,9 @@
   <!-- ################################################################### -->
   <group ns="$(arg mav_name)">
   <!-- <group ns="firefly"> -->
+
+    <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
+    <param name="partner_uav_odometry" type="str" value="/firefly_2/ground_truth/odometry"/>
 
      <!-- remap topic name -->
      <remap from="$(arg uav_odometry)" to="/firefly/ground_truth/odometry"/>
@@ -96,6 +105,9 @@
   <!-- ################################################################### -->
     <group ns="$(arg mav_name)_2">
   <!-- <group ns="firefly"> -->
+
+    <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
+    <param name="partner_uav_odometry" type="str" value="/firefly/ground_truth/odometry"/>
 
      <!-- remap topic name -->
      <remap from="$(arg uav_odometry)" to="/firefly_2/ground_truth/odometry"/>
