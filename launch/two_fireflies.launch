@@ -39,6 +39,14 @@
       <arg name="enable_logging" value="$(arg enable_logging)" />
       <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
       <arg name="log_file" value="$(arg log_file)"/>
+
+      <!-- Initial position of the center of mass of the payload -->
+      <arg name="z" value="-0.62"/>
+      <!-- TO DO: I will need to set up a PROPER initial position, taking into account cable_length, bar dimensions, and offset between the base link of the UAVs and their landing skids.
+      The desired value will then be
+                value= - (cable_length + z_payload/2 - skid_offset)
+      -->
+
     </include>
 
     <!-- Usage: waypoint_publisher <x> <y> <z> <yaw_deg> [<delay>] -->
