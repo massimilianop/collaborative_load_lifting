@@ -6,6 +6,21 @@
   <arg name="log_file" default="$(arg mav_name)" />
   <arg name="paused" value="true"/>
 
+  <arg name="cable_length" default="0.7" /> <!-- [m] -->
+  <arg name="cable_radius" default="0.005" /> <!-- [m] -->
+  <arg name="cable_mass" default="0.05" /> <!-- [kg] -->
+  <arg name="x_payload" default="1"/> <!-- [m] -->
+  <arg name="y_payload" default="0.01"/> <!-- [m] -->
+  <arg name="z_payload" default="0.01"/> <!-- [m] -->
+  <arg name="payload_mass" default="0.1"/> <!-- [kg] -->
+
+  <arg name="initial_height" value="-0.63"/>
+
+  <!--  value= - (cable_length - skid_off)
+
+        where skid_off=0.08 is the the distance between the center of the base link and the landing skids of the UAV
+  -->
+
   <!-- ################################################################### -->
   <!-- ##                        Additional args                        ## -->
   <!-- ################################################################### -->
@@ -40,12 +55,17 @@
       <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
       <arg name="log_file" value="$(arg log_file)"/>
 
+      <!-- Cable and payload characteristics -->
+      <arg name="cable_length" value="$(arg cable_length)"/>
+      <arg name="cable_radius" value="$(arg cable_radius)"/>
+      <arg name="cable_mass" value="$(arg cable_mass)"/>
+      <arg name="x_payload" value="$(arg x_payload)"/>
+      <arg name="y_payload" value="$(arg y_payload)"/>
+      <arg name="z_payload" value="$(arg z_payload)"/>
+      <arg name="payload_mass" value="$(arg payload_mass)"/>
+
       <!-- Initial position of the center of mass of the payload -->
-      <arg name="z" value="-0.62"/>
-      <!-- TO DO: I will need to set up a PROPER initial position, taking into account cable_length, bar dimensions, and offset between the base link of the UAVs and their landing skids.
-      The desired value will then be
-                value= - (cable_length + z_payload/2 - skid_offset)
-      -->
+      <arg name="z" value="$(arg initial_height)"/>
 
     </include>
 

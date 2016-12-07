@@ -10,15 +10,15 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Properties -->
-  <xacro:property name="cable_length" value="0.7" /> <!-- [m] -->
-  <xacro:property name="cable_radius" value="0.005" /> <!-- [m] -->
-  <xacro:property name="cable_mass" value="0.05" /> <!-- [kg] -->
-  <xacro:property name="sphere_radius" value="0.005" /> <!-- [m] -->
+  <xacro:property name="cable_length" value="$(arg cable_length)" /> <!-- [m] -->
+  <xacro:property name="cable_radius" value="$(arg cable_radius)" /> <!-- [m] -->
+  <xacro:property name="cable_mass" value="$(arg cable_mass)" /> <!-- [kg] -->
+  <xacro:property name="sphere_radius" value="$(arg cable_radius)" /> <!-- [m] -->
   <xacro:property name="sphere_mass" value="0.001" /> <!-- [kg] -->
-  <xacro:property name="x_payload" value="1"/> <!-- [m] -->
-  <xacro:property name="y_payload" value="0.01"/> <!-- [m] -->
-  <xacro:property name="z_payload" value="0.01"/> <!-- [m] -->
-  <xacro:property name="payload_mass" value="0.1"/> <!-- [kg] -->
+  <xacro:property name="x_payload" value="$(arg x_payload)"/> <!-- [m] -->
+  <xacro:property name="y_payload" value="$(arg y_payload)"/> <!-- [m] -->
+  <xacro:property name="z_payload" value="$(arg z_payload)"/> <!-- [m] -->
+  <xacro:property name="payload_mass" value="$(arg payload_mass)"/> <!-- [kg] -->
 
 
   <!-- Macro that creates a cuboid -->

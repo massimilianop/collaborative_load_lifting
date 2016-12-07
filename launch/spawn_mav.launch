@@ -13,6 +13,15 @@
   <arg name="log_file" default="$(arg mav_name)"/>
   <arg name="wait_to_record_bag" default="false"/>
   <arg name="enable_mavlink_interface" default="false"/>
+  
+  <!-- Cable and payload characteristics -->
+  <arg name="cable_length" default="$(arg cable_length)"/>
+  <arg name="cable_radius" default="$(arg cable_radius)"/>
+  <arg name="cable_mass" default="$(arg cable_mass)"/>
+  <arg name="x_payload" default="$(arg x_payload)"/>
+  <arg name="y_payload" default="$(arg y_payload)"/>
+  <arg name="z_payload" default="$(arg z_payload)"/>
+  <arg name="payload_mass" default="$(arg payload_mass)"/>
 
   <!-- send the robot XML to param server -->
   <param name="robot_description" command="
@@ -23,8 +32,16 @@
     log_file:=$(arg log_file)
     wait_to_record_bag:=$(arg wait_to_record_bag)
     mav_name:=$(arg mav_name)
-    namespace:=$(arg namespace)"
+    namespace:=$(arg namespace)
+    cable_length:=$(arg cable_length)
+    cable_radius:=$(arg cable_radius)
+    cable_mass:=$(arg cable_mass)
+    x_payload:=$(arg x_payload)
+    y_payload:=$(arg y_payload)
+    z_payload:=$(arg z_payload)
+    payload_mass:=$(arg payload_mass)"
   />
+
   <param name="tf_prefix" type="string" value="$(arg tf_prefix)" />
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
