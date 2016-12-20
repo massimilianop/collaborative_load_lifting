@@ -89,6 +89,8 @@
   <group ns="$(arg mav_name)">
   <!-- <group ns="firefly"> -->
 
+    <param name="uav_id" type="int" value="1"/>
+
     <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
     <param name="partner_uav_odometry" type="str" value="/firefly_2/ground_truth/odometry"/>
 
@@ -133,6 +135,8 @@
   <!-- ################################################################### -->
     <group ns="$(arg mav_name)_2">
   <!-- <group ns="firefly"> -->
+
+    <param name="uav_id" type="int" value="2"/>
 
     <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
     <param name="partner_uav_odometry" type="str" value="/firefly/ground_truth/odometry"/>
