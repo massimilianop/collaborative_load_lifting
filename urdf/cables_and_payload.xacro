@@ -157,7 +157,7 @@
     <joint name="bar/joint_sph1" type="continuous">
 
       <!-- Placing the joint reference frame on one end of the bar -->
-      <origin xyz="${-x_payload/2} 0 ${z_payload/2 + sphere_radius}" rpy="0 0 0" />
+      <origin xyz="${x_payload/2} 0 ${z_payload/2 + sphere_radius}" rpy="0 0 0" />
 
       <!-- Axis in the CHILD REFERENCE FRAME around which the rotation happens -->
       <axis xyz="0 1 0" />
@@ -171,7 +171,7 @@
     <joint name="bar/joint_sph2" type="continuous">
 
       <!-- Placing the joint reference frame on one end of the bar -->
-      <origin xyz="${x_payload/2} 0 ${z_payload/2 + sphere_radius}" rpy="0 0 0" />
+      <origin xyz="${-x_payload/2} 0 ${z_payload/2 + sphere_radius}" rpy="0 0 0" />
 
       <!-- Axis in the CHILD REFERENCE FRAME around which the rotation happens -->
       <axis xyz="0 1 0" />
