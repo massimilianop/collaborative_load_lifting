@@ -12,7 +12,7 @@
   <arg name="x_payload" default="1"/> <!-- [m] -->
   <arg name="y_payload" default="0.01"/> <!-- [m] -->
   <arg name="z_payload" default="0.01"/> <!-- [m] -->
-  <arg name="payload_mass" default="0.1"/> <!-- [kg] -->
+  <arg name="payload_mass" default="0.4"/> <!-- [kg] -->
 
   <arg name="initial_height" value="-0.63"/>
 
