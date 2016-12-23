@@ -1,0 +1,11 @@
+------------------------------------
+TO DO
+Massimiliano Pandolfo, 23rd Dec 2016
+------------------------------------
+
+The following low priority changes are planned:
+- erase mav_generic_odometry_sensor.gazebo, since it's not used in the current version
+- rename firefly_base.xacro
+
+Final goal:
+- library
