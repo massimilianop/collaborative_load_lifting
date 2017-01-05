@@ -6,24 +6,22 @@
   <arg name="log_file" default="$(arg mav_name)" />
   <arg name="paused" value="true"/>
 
+  <!-- Payload parameters -->
   <arg name="cable_length" default="0.7" /> <!-- [m] -->
   <arg name="cable_radius" default="0.005" /> <!-- [m] -->
   <arg name="cable_mass" default="0.05" /> <!-- [kg] -->
+  <arg name="d1" default="0.5"/> <!-- [m] -->
+  <arg name="d2" default="-0.5"/> <!-- [m] -->
   <arg name="x_payload" default="1"/> <!-- [m] -->
   <arg name="y_payload" default="0.01"/> <!-- [m] -->
   <arg name="z_payload" default="0.01"/> <!-- [m] -->
   <arg name="payload_mass" default="0.4"/> <!-- [kg] -->
 
+  <!-- This value corresponds the initial height of the center of mass of the payload -->
   <arg name="initial_height" value="-0.63"/>
 
-  <!--  value= - (cable_length - skid_off)
 
-        where skid_off=0.08 is the the distance between the center of the base link and the landing skids of the UAV
-  -->
-
-  <!-- ################################################################### -->
-  <!-- ##                        Additional args                        ## -->
-  <!-- ################################################################### -->
+  <!-- ######################### Additional args ######################### -->
   <arg name="file_name" default="file"/>
   <arg name="playing_back" default="false"/>
   <arg name="record" default="false" />
@@ -42,11 +40,8 @@
     <!-- <arg name="gui" value="false"/> -->
   </include>
 
+  <!-- This code spawns the contents of the .xacro file -->
   <group ns="$(arg mav_name)">
-
-    <!-- REMOVE LATER
-    <param name="trajectry_offset_z" type="double" value="0.5"/>
-    -->
 
     <include file="$(find collaborative_load_lifting)/launch/spawn_mav.launch">
       <arg name="mav_name" value="$(arg mav_name)" />
@@ -69,17 +64,6 @@
 
     </include>
 
-    <!-- Usage: waypoint_publisher <x> <y> <z> <yaw_deg> [<delay>] -->
-    <!--
-    <node name="waypoint_publisher" pkg="rotors_gazebo" type="waypoint_publisher" output="screen" args="-0.5 0 1 0 "/>
-
-    <node name="hovering_example" pkg="rotors_gazebo" type="hovering_example" output="screen"/>
-
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-    -->
-    
   </group>
 
 
@@ -90,6 +74,9 @@
   <!-- <group ns="firefly"> -->
 
     <param name="uav_id" type="int" value="1"/>
+    <param name="d_i" type="double" value="$(arg d1)"/>
+    <param name="cable_length" type="double" value="$(arg cable_length)"/>
+    <param name="payload_mass" type="double" value="$(arg payload_mass)"/>
 
     <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
     <param name="partner_uav_odometry" type="str" value="/firefly_2/ground_truth/odometry"/>
@@ -137,6 +124,9 @@
   <!-- <group ns="firefly"> -->
 
     <param name="uav_id" type="int" value="2"/>
+    <param name="d_i" type="double" value="$(arg d2)"/>
+    <param name="cable_length" type="double" value="$(arg cable_length)"/>
+    <param name="payload_mass" type="double" value="$(arg payload_mass)"/>
 
     <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
     <param name="partner_uav_odometry" type="str" value="/firefly/ground_truth/odometry"/>
