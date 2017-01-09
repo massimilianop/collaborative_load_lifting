@@ -86,6 +86,8 @@
      <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
      <remap from="firefly_motor_speed" to="/firefly/command/motor_speed"/>
      <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
+
+     <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
  
     <param name="uav_odometry" type="str" value="$(arg uav_odometry)"/>
     <param name="reference_position" type="str" value="$(arg reference_position)"/>
@@ -136,7 +138,9 @@
      <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
      <remap from="firefly_motor_speed" to="/firefly_2/command/motor_speed"/>
      <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
- 
+
+     <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
+
     <param name="uav_odometry" type="str" value="$(arg uav_odometry)"/>
     <param name="reference_position" type="str" value="$(arg reference_position)"/>
     <param name="fa_disturbance_estimate" type="str" value="$(arg fa_disturbance_estimate)"/>
@@ -165,20 +169,5 @@
     </include>
 
   </group>
-
-<!--
-  <group ns="$(arg mav_name)_2">
-    <node name="lee_position_controller_node" pkg="rotors_control" type="lee_position_controller_node" output="screen">
-      <rosparam command="load" file="$(find rotors_gazebo)/resource/lee_controller_$(arg mav_name).yaml" />
-      <rosparam command="load" file="$(find rotors_gazebo)/resource/$(arg mav_name).yaml" />
-      <remap from="odometry" to="odometry_sensor2/odometry" />
-    </node>
-    <node name="waypoint_publisher" pkg="rotors_gazebo" type="waypoint_publisher" output="screen" args="0.5 0 1 0 "/>
-
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-  </group>
--->
 
 </launch>
