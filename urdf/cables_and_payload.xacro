@@ -78,7 +78,7 @@
         <origin xyz="0 0 ${cable_length/2}" rpy="0 0 0"/>
         <mass value="${cable_mass}"/>
         <inertia
-          ixx="0.0" ixy="0.0" ixz="0.0"
+          ixx="0.0001" ixy="0.0" ixz="0.0"
           iyy="${cable_mass * cable_length * cable_length / 3}" iyz="0.0"
           izz="${cable_mass * cable_length * cable_length / 3}"/>
       </inertial>
