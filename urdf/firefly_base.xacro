@@ -41,8 +41,8 @@
 
   <!-- Connecting cables to payload -->
   <xacro:payload_macro
-    link1="${namespace}/aux_pay_1"
-    link2="${namespace}_2/aux_pay_2">
+    robot_namespace_1="${namespace}"
+    robot_namespace_2="${namespace}_2">
   </xacro:payload_macro>
 
   <!-- Adding odometry sensor to the bar -->
