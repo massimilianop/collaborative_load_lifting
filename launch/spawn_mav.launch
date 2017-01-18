@@ -51,9 +51,9 @@
          -x $(arg x)
          -y $(arg y)
          -z $(arg z)
-         -R 0
-         -P 0
-         -Y 0
+         -R 0.0
+         -P 0.0
+         -Y 2.0
          -model $(arg namespace)"
    respawn="false" output="screen">
   </node>
