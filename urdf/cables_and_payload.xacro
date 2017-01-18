@@ -39,24 +39,23 @@
 
 
   <!-- Macro for the auxiliary links that make up a ball joint-->
-  <xacro:macro name="hinge_macro">
+  <xacro:macro name="hinge_macro" params="r mass">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.0001"/>
+      <mass value="${mass}"/>
         <inertia
-        ixx="1" ixy="0.0" ixz="0.0"
-        iyy="1" iyz="0.0"
-        izz="1"/>
+        ixx="${0.4 * mass * r * r}" ixy="0.0" ixz="0.0"
+        iyy="${0.4 * mass * r * r}" iyz="0.0"
+        izz="${0.4 * mass * r * r}"/>
     </inertial>
 
     <visual>
       <geometry>
-        <box size="0.001 0.001 0.001"/>
+        <sphere radius="${r}"/>
       </geometry>
     </visual>
 
-  </xacro:macro>
-
+</xacro:macro>
 
   <!-- Macro that connects a cable to a UAV -->
   <xacro:macro name="cable_macro"
@@ -65,11 +64,11 @@
     <!--                              LINKS                              -->
 
     <link name="${robot_namespace}/aux_uav_x">
-      <xacro:hinge_macro/>
+      <xacro:hinge_macro r="${sphere_radius}" mass="${sphere_mass}"/>
     </link>
 
     <link name="${robot_namespace}/aux_uav_y">
-      <xacro:hinge_macro/>
+      <xacro:hinge_macro r="${sphere_radius}" mass="${sphere_mass}"/>
     </link>
 
     <link name="${robot_namespace}/cable">
@@ -77,9 +76,9 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="${cable_mass}"/>
         <inertia
-          ixx="${cable_mass * cable_length * cable_length / 12}" ixy="0.0" ixz="0.0"
-          iyy="${cable_mass * cable_length * cable_length / 12}" iyz="0.0"
-          izz="0.0"/>
+          ixx="${cable_mass * (cable_length * cable_length + 3 * cable_radius * cable_radius) / 12}" ixy="0.0" ixz="0.0"
+          iyy="${cable_mass * (cable_length * cable_length + 3 * cable_radius * cable_radius) / 12}" iyz="0.0"
+          izz="${cable_mass * cable_radius * cable_radius / 2}"/>
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -90,11 +89,11 @@
     </link>
 
     <link name="${robot_namespace}/aux_load_x">
-      <xacro:hinge_macro/>
+      <xacro:hinge_macro r="${sphere_radius}" mass="${sphere_mass}"/>
     </link>
 
     <link name="${robot_namespace}/aux_load_y">
-      <xacro:hinge_macro/>
+      <xacro:hinge_macro r="${sphere_radius}" mass="${sphere_mass}"/>
     </link>
 
     <!--                              JOINTS                              -->
