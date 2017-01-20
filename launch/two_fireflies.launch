@@ -10,9 +10,9 @@
   <arg name="cable_length" default="0.7" /> <!-- [m] -->
   <arg name="cable_radius" default="0.005" /> <!-- [m] -->
   <arg name="cable_mass" default="0.05" /> <!-- [kg] -->
-  <arg name="d1" default="0.5"/> <!-- [m] -->
-  <arg name="d2" default="-0.5"/> <!-- [m] -->
-  <arg name="x_payload" default="1"/> <!-- [m] -->
+  <arg name="d1" default="1.0"/> <!-- [m] -->
+  <arg name="d2" default="-1.0"/> <!-- [m] -->
+  <arg name="x_payload" default="2.0"/> <!-- [m] -->
   <arg name="y_payload" default="0.01"/> <!-- [m] -->
   <arg name="z_payload" default="0.01"/> <!-- [m] -->
   <arg name="payload_mass" default="0.4"/> <!-- [kg] -->

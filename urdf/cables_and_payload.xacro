@@ -101,7 +101,7 @@
     <!-- x axis rotation between UAV and cable -->
     <joint name="${robot_namespace}/joint_uav_x" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0" />
-      <axis xyz="1 0 0" />
+      <axis xyz="0 1 0" />
       <parent link="${robot_namespace}/aux_uav_x" />
       <child link="${uav_body_frame}" />
     </joint>
@@ -109,7 +109,7 @@
     <!-- y axis rotation between UAV and cable -->
     <joint name="${robot_namespace}/joint_uav_y" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0" />
-      <axis xyz="0 1 0" />
+      <axis xyz="1 0 0" />
       <parent link="${robot_namespace}/aux_uav_y" />
       <child link="${robot_namespace}/aux_uav_x" />
     </joint>

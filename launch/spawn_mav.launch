@@ -53,7 +53,7 @@
          -z $(arg z)
          -R 0
          -P 0
-         -Y 0
+         -Y 2
          -model $(arg namespace)"
    respawn="false" output="screen">
   </node>
