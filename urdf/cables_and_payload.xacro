@@ -13,7 +13,7 @@
   <xacro:property name="cable_radius" value="$(arg cable_radius)" /> <!-- [m] -->
   <xacro:property name="cable_mass" value="$(arg cable_mass)" /> <!-- [kg] -->
   <xacro:property name="sphere_radius" value="$(arg cable_radius)" /> <!-- [m] -->
-  <xacro:property name="sphere_mass" value="0.001" /> <!-- [kg] -->
+  <xacro:property name="sphere_mass" value="0.01" /> <!-- [kg] -->
   <xacro:property name="x_payload" value="$(arg x_payload)"/> <!-- [m] -->
   <xacro:property name="y_payload" value="$(arg y_payload)"/> <!-- [m] -->
   <xacro:property name="z_payload" value="$(arg z_payload)"/> <!-- [m] -->
@@ -99,7 +99,7 @@
     <!--                              JOINTS                              -->
 
     <!-- x axis rotation between UAV and cable -->
-    <joint name="${robot_namespace}/joint_uav_x" type="continuous">
+    <joint name="${robot_namespace}/joint_uav_y" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <axis xyz="0 1 0" />
       <parent link="${robot_namespace}/aux_uav_x" />
@@ -107,7 +107,7 @@
     </joint>
 
     <!-- y axis rotation between UAV and cable -->
-    <joint name="${robot_namespace}/joint_uav_y" type="continuous">
+    <joint name="${robot_namespace}/joint_uav_x" type="continuous">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <axis xyz="1 0 0" />
       <parent link="${robot_namespace}/aux_uav_y" />
@@ -157,7 +157,7 @@
 
     <!-- y axis rotation between cable 1 and payload -->
     <joint name="bar/joint_load_y_1" type="continuous">
-      <origin xyz="${x_payload/2} 0 0" rpy="0 0 0" />
+      <origin xyz="${x_payload/2 - sphere_radius} 0 ${z_payload/2}" rpy="0 0 0" />
       <axis xyz="0 1 0" />
       <parent link="bar" />
       <child link="${link1}" />
@@ -165,7 +165,7 @@
 
     <!-- y axis rotation between cable 2 and payload -->
     <joint name="bar/joint_load_y_2" type="continuous">
-      <origin xyz="${-x_payload/2} 0 0" rpy="0 0 0" />
+      <origin xyz="${-x_payload/2 + sphere_radius} 0 ${z_payload/2}" rpy="0 0 0" />
       <axis xyz="0 1 0" />
       <parent link="bar" />
       <child link="${link2}" />
