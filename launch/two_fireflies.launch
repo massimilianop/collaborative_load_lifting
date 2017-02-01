@@ -21,6 +21,7 @@
   <arg name="initial_height" value="-0.63"/>
 
 
+
   <!-- ######################### Additional args ######################### -->
   <arg name="file_name" default="file"/>
   <arg name="playing_back" default="false"/>
@@ -62,6 +63,11 @@
       <!-- Initial position of the center of mass of the payload -->
       <arg name="z" value="$(arg initial_height)"/>
 
+      <!-- Initial orientation of the robot -->
+      <arg name="roll" value="0.0"/>
+      <arg name="pitch" value="0.0"/>
+      <arg name="yaw" value="0.0"/>
+
     </include>
 
   </group>
@@ -81,14 +87,21 @@
     <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
     <param name="partner_uav_odometry" type="str" value="/firefly_2/ground_truth/odometry"/>
 
-     <!-- remap topic name -->
-     <remap from="$(arg uav_odometry)" to="/firefly/ground_truth/odometry"/>
-     <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
-     <remap from="firefly_motor_speed" to="/firefly/command/motor_speed"/>
-     <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
+    <!-- remap topic name -->
+    <remap from="$(arg uav_odometry)" to="/firefly/ground_truth/odometry"/>
+    <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
+    <remap from="firefly_motor_speed" to="/firefly/command/motor_speed"/>
+    <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
 
-     <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
- 
+    <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
+    <remap from="uav_reference_path" to="/uav_1_reference_path"/>
+
+<!--     <param name="change_flight_mode_server" type="str" value="uav_1_change_flight_mode_server"/> -->
+<!--     <param name="change_flight_mode" type="str" value="uav_1_change_flight_mode"/> -->
+
+<!--     <remap from="change_flight_mode_server" to="/uav_1/change_flight_mode_server"/>
+    <remap from="change_flight_mode" to="/uav_1/change_flight_mode"/> -->
+
     <param name="uav_odometry" type="str" value="$(arg uav_odometry)"/>
     <param name="reference_position" type="str" value="$(arg reference_position)"/>
     <param name="fa_disturbance_estimate" type="str" value="$(arg fa_disturbance_estimate)"/>
@@ -133,13 +146,20 @@
     <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
     <param name="partner_uav_odometry" type="str" value="/firefly/ground_truth/odometry"/>
 
-     <!-- remap topic name -->
-     <remap from="$(arg uav_odometry)" to="/firefly_2/ground_truth/odometry"/>
-     <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
-     <remap from="firefly_motor_speed" to="/firefly_2/command/motor_speed"/>
-     <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
+    <!-- remap topic name -->
+    <remap from="$(arg uav_odometry)" to="/firefly_2/ground_truth/odometry"/>
+    <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
+    <remap from="firefly_motor_speed" to="/firefly_2/command/motor_speed"/>
+    <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
 
-     <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
+    <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
+    <remap from="uav_reference_path" to="/uav_2_reference_path"/>
+
+<!--     <param name="change_flight_mode_server" type="str" value="uav_2_change_flight_mode_server"/> -->
+<!--     <param name="change_flight_mode" type="str" value="uav_2_change_flight_mode"/>
+ -->
+<!--     <remap from="change_flight_mode_server" to="/uav_2/change_flight_mode_server"/>
+    <remap from="change_flight_mode" to="/uav_2/change_flight_mode"/> -->
 
     <param name="uav_odometry" type="str" value="$(arg uav_odometry)"/>
     <param name="reference_position" type="str" value="$(arg reference_position)"/>

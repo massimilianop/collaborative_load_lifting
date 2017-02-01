@@ -8,6 +8,9 @@
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
   <arg name="z" default="0.1"/>
+  <arg name="roll" default="0.0"/>
+  <arg name="pitch" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
   <arg name="enable_logging" default="false"/>
   <arg name="enable_ground_truth" default="true"/>
   <arg name="log_file" default="$(arg mav_name)"/>
@@ -51,9 +54,9 @@
          -x $(arg x)
          -y $(arg y)
          -z $(arg z)
-         -R 0
-         -P 0
-         -Y 2
+         -R $(arg roll)
+         -P $(arg pitch)
+         -Y $(arg yaw)
          -model $(arg namespace)"
    respawn="false" output="screen">
   </node>
