@@ -68,6 +68,16 @@
       <arg name="pitch" value="0.0"/>
       <arg name="yaw" value="0.0"/>
 
+      <!-- Initial joint values for the robot -->
+      <arg name="j_uav1_x" value="0.0"/>
+      <arg name="j_uav2_x" value="0.0"/>
+      <arg name="j_bar1_x" value="0.0"/>
+      <arg name="j_bar2_x" value="0.0"/>
+      <arg name="j_uav1_y" value="0.0"/>
+      <arg name="j_uav2_y" value="0.0"/>
+      <arg name="j_bar1_y" value="0.0"/>
+      <arg name="j_bar2_y" value="0.0"/>
+
     </include>
 
   </group>
