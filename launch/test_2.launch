@@ -1,0 +1,201 @@
+<launch>
+  <arg name="mav_name" default="firefly"/>
+  <arg name="world_name" default="basic"/>
+  <arg name="enable_logging" default="false" />
+  <arg name="enable_ground_truth" default="true" />
+  <arg name="log_file" default="$(arg mav_name)" />
+  <arg name="paused" value="true"/>
+
+  <!-- Payload parameters -->
+  <arg name="cable_length" default="0.7" /> <!-- [m] -->
+  <arg name="cable_radius" default="0.005" /> <!-- [m] -->
+  <arg name="cable_mass" default="0.05" /> <!-- [kg] -->
+  <arg name="d1" default="0.9"/> <!-- [m] -->
+  <arg name="d2" default="-0.9"/> <!-- [m] -->
+  <arg name="x_payload" default="1.8"/> <!-- [m] -->
+  <arg name="y_payload" default="0.05"/> <!-- [m] -->
+  <arg name="z_payload" default="0.03"/> <!-- [m] -->
+  <arg name="payload_mass" default="0.4"/> <!-- [kg] -->
+
+
+  <!-- ######################### Additional args ######################### -->
+  <arg name="file_name" default="file"/>
+  <arg name="playing_back" default="false"/>
+  <arg name="record" default="false" />
+
+  <arg name="uav_odometry" value="uav_odometry"/>
+  <arg name="reference_position" value="reference_position"/>
+  <arg name="fa_disturbance_estimate" value="fa_disturbance_estimate"/>
+  <!-- ################################################################### -->
+
+
+  <!--<env name="GAZEBO_MODEL_PATH" value="$(find rotors_gazebo)/models"/> -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find rotors_gazebo)/worlds/$(arg world_name).world" />
+    <!-- <arg name="debug" value="true"/> -->
+    <arg name="paused" value="$(arg paused)"/>
+    <!-- <arg name="gui" value="false"/> -->
+  </include>
+
+  <!-- This code spawns the contents of the .xacro file -->
+  <group ns="$(arg mav_name)">
+
+    <include file="$(find collaborative_load_lifting)/launch/spawn_mav.launch">
+      <arg name="mav_name" value="$(arg mav_name)" />
+      <arg name="model" value="$(find collaborative_load_lifting)/urdf/firefly_base.xacro" />
+      <arg name="enable_logging" value="$(arg enable_logging)" />
+      <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
+      <arg name="log_file" value="$(arg log_file)"/>
+
+      <!-- Cable and payload characteristics -->
+      <arg name="cable_length" value="$(arg cable_length)"/>
+      <arg name="cable_radius" value="$(arg cable_radius)"/>
+      <arg name="cable_mass" value="$(arg cable_mass)"/>
+      <arg name="x_payload" value="$(arg x_payload)"/>
+      <arg name="y_payload" value="$(arg y_payload)"/>
+      <arg name="z_payload" value="$(arg z_payload)"/>
+      <arg name="payload_mass" value="$(arg payload_mass)"/>
+
+      <!-- Initial position of the center of mass of the payload -->
+      <arg name="x" value="-0.35"/>
+      <arg name="y" value="0.0"/>
+      <arg name="z" value="0.58"/>
+
+      <!-- Initial orientation of the robot -->
+      <arg name="roll" value="0.0"/>
+      <arg name="pitch" value="0.0"/>
+      <arg name="yaw" value="0.0"/>
+
+      <!-- Initial joint values for the robot -->
+      <arg name="j_uav1_x" value="0.0"/>
+      <arg name="j_uav2_x" value="0.0"/>
+      <arg name="j_bar1_x" value="0.0"/>
+      <arg name="j_bar2_x" value="0.0"/>
+      <arg name="j_uav1_y" value="-0.5"/>
+      <arg name="j_uav2_y" value="-0.5"/>
+      <arg name="j_bar1_y" value="0.5"/>
+      <arg name="j_bar2_y" value="0.5"/>
+
+    </include>
+
+  </group>
+
+
+  <!-- ################################################################### -->
+  <!-- ##                     Controller for UAV_1                      ## -->
+  <!-- ################################################################### -->
+  <group ns="$(arg mav_name)">
+  <!-- <group ns="firefly"> -->
+
+    <param name="uav_id" type="int" value="1"/>
+    <param name="d_i" type="double" value="$(arg d1)"/>
+    <param name="cable_length" type="double" value="$(arg cable_length)"/>
+    <param name="payload_mass" type="double" value="$(arg payload_mass)"/>
+
+    <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
+    <param name="partner_uav_odometry" type="str" value="/firefly_2/ground_truth/odometry"/>
+
+    <!-- remap topic name -->
+    <remap from="$(arg uav_odometry)" to="/firefly/ground_truth/odometry"/>
+    <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
+    <remap from="firefly_motor_speed" to="/firefly/command/motor_speed"/>
+    <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
+
+    <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
+    <remap from="uav_reference_path" to="/uav_1_reference_path"/>
+
+<!--     <param name="change_flight_mode_server" type="str" value="uav_1_change_flight_mode_server"/> -->
+<!--     <param name="change_flight_mode" type="str" value="uav_1_change_flight_mode"/> -->
+
+<!--     <remap from="change_flight_mode_server" to="/uav_1/change_flight_mode_server"/>
+    <remap from="change_flight_mode" to="/uav_1/change_flight_mode"/> -->
+
+    <param name="uav_odometry" type="str" value="$(arg uav_odometry)"/>
+    <param name="reference_position" type="str" value="$(arg reference_position)"/>
+    <param name="fa_disturbance_estimate" type="str" value="$(arg fa_disturbance_estimate)"/>
+    <param name="playing_back" type="bool" value="$(arg playing_back)"/>
+
+    <!-- Controller Node -->
+    <include file="$(find quad_control)/launch/firefly_parameters.launch" />
+    <include file="$(find quad_control)/launch/firefly_control_parameters.launch" />
+    <node pkg="quad_control" name="controller_firefly" type="cycle_quad_control_mission.py" output="screen"/>
+
+    <group if="$(arg playing_back)">
+      <node pkg="rosbag" type="play" name="rosbag_record"
+        args="$(find quad_control)/experimental_data/rosbag/$(arg file_name).bag"
+        if="$(arg record)"/>
+    </group>
+
+    <group unless="$(arg playing_back)">
+      <node pkg="rosbag" type="record" name="rosbag_record"
+        args="-O $(find quad_control)/experimental_data/rosbag/$(arg file_name) ServiceSequencer $(arg uav_odometry) uav_roll_pitch_yawrate_thrust $(arg fa_disturbance_estimate) $(arg reference_position)"
+        if="$(arg record)"/>  
+    </group>
+
+    <include file="$(find quad_control)/launch/gui.launch">
+      <!-- all vars that included.launch requires must be set -->
+      <arg name="gui_off" value="$(arg playing_back)"/>
+    </include>
+
+  </group>
+
+
+  <!-- ################################################################### -->
+  <!-- ##                     Controller for UAV_2                      ## -->
+  <!-- ################################################################### -->
+    <group ns="$(arg mav_name)_2">
+  <!-- <group ns="firefly"> -->
+
+    <param name="uav_id" type="int" value="2"/>
+    <param name="d_i" type="double" value="$(arg d2)"/>
+    <param name="cable_length" type="double" value="$(arg cable_length)"/>
+    <param name="payload_mass" type="double" value="$(arg payload_mass)"/>
+
+    <param name="bar_odometry" type="str" value="/bar/ground_truth/odometry"/>
+    <param name="partner_uav_odometry" type="str" value="/firefly/ground_truth/odometry"/>
+
+    <!-- remap topic name -->
+    <remap from="$(arg uav_odometry)" to="/firefly_2/ground_truth/odometry"/>
+    <!-- <remap from="$(arg uav_odometry)" to="ground_truth/odometry"/> -->
+    <remap from="firefly_motor_speed" to="/firefly_2/command/motor_speed"/>
+    <!-- <remap from="firefly_motor_speed" to="command/motor_speed"/> -->
+
+    <remap from="bar_reference_pose_path" to="/bar_reference_pose_path"/>
+    <remap from="uav_reference_path" to="/uav_2_reference_path"/>
+
+<!--     <param name="change_flight_mode_server" type="str" value="uav_2_change_flight_mode_server"/> -->
+<!--     <param name="change_flight_mode" type="str" value="uav_2_change_flight_mode"/>
+ -->
+<!--     <remap from="change_flight_mode_server" to="/uav_2/change_flight_mode_server"/>
+    <remap from="change_flight_mode" to="/uav_2/change_flight_mode"/> -->
+
+    <param name="uav_odometry" type="str" value="$(arg uav_odometry)"/>
+    <param name="reference_position" type="str" value="$(arg reference_position)"/>
+    <param name="fa_disturbance_estimate" type="str" value="$(arg fa_disturbance_estimate)"/>
+    <param name="playing_back" type="bool" value="$(arg playing_back)"/>
+
+    <!-- Controller Node -->
+    <include file="$(find quad_control)/launch/firefly_parameters.launch" />
+    <include file="$(find quad_control)/launch/firefly_control_parameters.launch" />
+    <node pkg="quad_control" name="controller_firefly" type="cycle_quad_control_mission.py" output="screen"/>
+
+    <group if="$(arg playing_back)">
+      <node pkg="rosbag" type="play" name="rosbag_record"
+        args="$(find quad_control)/experimental_data/rosbag/$(arg file_name).bag"
+        if="$(arg record)"/>
+    </group>
+
+    <group unless="$(arg playing_back)">
+      <node pkg="rosbag" type="record" name="rosbag_record"
+        args="-O $(find quad_control)/experimental_data/rosbag/$(arg file_name) ServiceSequencer $(arg uav_odometry) uav_roll_pitch_yawrate_thrust $(arg fa_disturbance_estimate) $(arg reference_position)"
+        if="$(arg record)"/>  
+    </group>
+
+    <include file="$(find quad_control)/launch/gui.launch">
+      <!-- all vars that included.launch requires must be set -->
+      <arg name="gui_off" value="$(arg playing_back)"/>
+    </include>
+
+  </group>
+
+</launch>

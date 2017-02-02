@@ -14,7 +14,7 @@
   <arg name="pitch" default="0.0"/>
   <arg name="yaw" default="0.0"/>
 
-  <!-- Joint positions -->
+  <!-- Initial joint values for the robot -->
   <arg name="j_uav1_x" default="0.0"/>
   <arg name="j_uav2_x" default="0.0"/>
   <arg name="j_bar1_x" default="0.0"/>
@@ -74,10 +74,10 @@
          -J firefly_2/joint_uav_x $(arg j_uav2_x)
          -J firefly/joint_load_x $(arg j_bar1_x)
          -J firefly_2/joint_load_x $(arg j_bar2_x)
-         -J firefly/joint_uav_y 0.0
-         -J firefly_2/joint_uav_y 0.0
-         -J bar/joint_load_y_1 0.0
-         -J bar/joint_load_y_2 0.0
+         -J firefly/joint_uav_y $(arg j_uav1_y)
+         -J firefly_2/joint_uav_y $(arg j_uav2_y)
+         -J bar/joint_load_y_1 $(arg j_bar1_y)
+         -J bar/joint_load_y_2 $(arg j_bar2_y)
          -model $(arg namespace)"
    respawn="false" output="screen">
   </node>
