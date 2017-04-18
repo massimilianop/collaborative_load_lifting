@@ -5,9 +5,25 @@
   <arg name="namespace" default="$(arg mav_name)"/>
   <arg name="model" default="$(find collaborative_load_lifting)/urdf/$(arg mav_name)_base.xacro"/>
   <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/>
+
+  <!-- Initial position and orientation fo the robot -->
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
   <arg name="z" default="0.1"/>
+  <arg name="roll" default="0.0"/>
+  <arg name="pitch" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+
+  <!-- Initial joint values for the robot -->
+  <arg name="j_uav1_x" default="0.0"/>
+  <arg name="j_uav2_x" default="0.0"/>
+  <arg name="j_bar1_x" default="0.0"/>
+  <arg name="j_bar2_x" default="0.0"/>
+  <arg name="j_uav1_y" default="0.0"/>
+  <arg name="j_uav2_y" default="0.0"/>
+  <arg name="j_bar1_y" default="0.0"/>
+  <arg name="j_bar2_y" default="0.0"/>
+
   <arg name="enable_logging" default="false"/>
   <arg name="enable_ground_truth" default="true"/>
   <arg name="log_file" default="$(arg mav_name)"/>
@@ -51,9 +67,17 @@
          -x $(arg x)
          -y $(arg y)
          -z $(arg z)
-         -R 0.0
-         -P 0.0
-         -Y 2.0
+         -R $(arg roll)
+         -P $(arg pitch)
+         -Y $(arg yaw)
+         -J firefly/joint_uav_x $(arg j_uav1_x)
+         -J firefly_2/joint_uav_x $(arg j_uav2_x)
+         -J firefly/joint_load_x $(arg j_bar1_x)
+         -J firefly_2/joint_load_x $(arg j_bar2_x)
+         -J firefly/joint_uav_y $(arg j_uav1_y)
+         -J firefly_2/joint_uav_y $(arg j_uav2_y)
+         -J bar/joint_load_y_1 $(arg j_bar1_y)
+         -J bar/joint_load_y_2 $(arg j_bar2_y)
          -model $(arg namespace)"
    respawn="false" output="screen">
   </node>

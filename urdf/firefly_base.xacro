@@ -23,8 +23,7 @@
   <!-- Attaching the cable to UAV_1 -->
   <xacro:cable_macro
     robot_namespace="${namespace}"
-    uav_body_frame="${namespace}/base_link"
-    id_number="1">
+    uav_body_frame="${namespace}/base_link">
   </xacro:cable_macro>
 
   <!-- Creation of UAV_2 -->
@@ -35,14 +34,13 @@
   <!-- Attaching the cable to UAV_2 -->
   <xacro:cable_macro
     robot_namespace="${namespace}_2"
-    uav_body_frame="${namespace}_2/base_link"
-    id_number="2">
+    uav_body_frame="${namespace}_2/base_link">
   </xacro:cable_macro>
 
   <!-- Connecting cables to payload -->
   <xacro:payload_macro
-    robot_namespace_1="${namespace}"
-    robot_namespace_2="${namespace}_2">
+    link1="${namespace}/aux_load_y"
+    link2="${namespace}_2/aux_load_y">
   </xacro:payload_macro>
 
   <!-- Adding odometry sensor to the bar -->

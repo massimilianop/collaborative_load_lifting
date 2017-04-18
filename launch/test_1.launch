@@ -13,13 +13,9 @@
   <arg name="d1" default="0.9"/> <!-- [m] -->
   <arg name="d2" default="-0.9"/> <!-- [m] -->
   <arg name="x_payload" default="1.8"/> <!-- [m] -->
-  <arg name="y_payload" default="0.05"/> <!-- [m] -->
-  <arg name="z_payload" default="0.03"/> <!-- [m] -->
+  <arg name="y_payload" default="0.02"/> <!-- [m] -->
+  <arg name="z_payload" default="0.02"/> <!-- [m] -->
   <arg name="payload_mass" default="0.4"/> <!-- [kg] -->
-
-  <!-- This value corresponds the initial height of the center of mass of the payload -->
-  <arg name="initial_height" value="-0.63"/>
-
 
 
   <!-- ######################### Additional args ######################### -->
@@ -61,7 +57,9 @@
       <arg name="payload_mass" value="$(arg payload_mass)"/>
 
       <!-- Initial position of the center of mass of the payload -->
-      <arg name="z" value="$(arg initial_height)"/>
+      <arg name="x" value="0.0"/>
+      <arg name="y" value="0.35"/>
+      <arg name="z" value="0.58"/>
 
       <!-- Initial orientation of the robot -->
       <arg name="roll" value="0.0"/>
@@ -69,10 +67,10 @@
       <arg name="yaw" value="0.0"/>
 
       <!-- Initial joint values for the robot -->
-      <arg name="j_uav1_x" value="0.0"/>
-      <arg name="j_uav2_x" value="0.0"/>
-      <arg name="j_bar1_x" value="0.0"/>
-      <arg name="j_bar2_x" value="0.0"/>
+      <arg name="j_uav1_x" value="-0.5"/>
+      <arg name="j_uav2_x" value="-0.5"/>
+      <arg name="j_bar1_x" value="0.5"/>
+      <arg name="j_bar2_x" value="0.5"/>
       <arg name="j_uav1_y" value="0.0"/>
       <arg name="j_uav2_y" value="0.0"/>
       <arg name="j_bar1_y" value="0.0"/>
